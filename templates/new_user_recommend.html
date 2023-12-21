@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recommendation Result</title>
+</head>
+<body>
+    <h1>Food Recommendation</h1>
+    <p>User ID: <span id="user_id"></span></p>
+    <p>Makanan Pilihan: <span id="selected_food"></span></p>
+
+    <p>Label-Based Recommendation:</p>
+    <ul id="label_based_recommendation"></ul>
+
+    <p>Like-Based Recommendation:</p>
+    <ul id="like_based_recommendation"></ul>
+
+    <script>
+        // Parse the JSON data
+        var jsonData = {{ recommendations_json | tojson | safe }};
+
+        // Display user ID
+        document.getElementById("user_id").textContent = jsonData.user_id;
+
+        // Display label-based recommendation
+        var labelBasedRecommendationList = jsonData.label_based_recommendation.map(function(item) {
+            return "<li>" + item + "</li>";
+        });
+        document.getElementById("label_based_recommendation").innerHTML = labelBasedRecommendationList.join("");
+
+        var imageLabelBasedRecommendationList = jsonData.image_content_path.map(function(item) {
+            return "<li>" + item + "</li>";
+        });
+
+        // Display like-based recommendation
+        var likeBasedRecommendationList = jsonData.like_based_recommendation.map(function(item) {
+            return "<li>" + item + "</li>";
+        });
+        document.getElementById("like_based_recommendation").innerHTML = likeBasedRecommendationList.join("");
+
+        var imageLikeBasedRecommendationList = jsonData.image_like_path.map(function(item) {
+            return "<li>" + item + "</li>";
+        });
+
+
+    </script>
+</body>
+</html>
+

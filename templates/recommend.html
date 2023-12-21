@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recommendation Result</title>
+</head>
+<body>
+    <h1>Food Recommendation</h1>
+    <p>User ID: <span id="user_id"></span></p>
+    <p>Makanan Rekomendasi:</p>
+    <ul id="similar_food_list"></ul>
+
+    <script>
+        // Fetch JSON data from the /recommend endpoint
+        fetch('/recommend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                liked_food_id: '1,2,3',
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the DOM with the received JSON data
+            document.getElementById("user_id").textContent = data.user_id;
+
+            var similarFoodList = data.like_based_recommendation.map(function(food) {
+                return "<li>" + food + "</li>";
+            });
+            document.getElementById("similar_food_list").innerHTML = similarFoodList.join("");
+
+            var imageLikeBasedRecommendationList = jsonData.image_like_path.map(function(item) {
+            return "<li>" + item + "</li>";
+        });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    </script>
+</body>
+</html>
